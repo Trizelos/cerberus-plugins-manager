@@ -1,0 +1,27 @@
+
+table.cpm {
+    border-collapse: collapse;
+}
+
+table.cpm td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table.cpm tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+table.cpm tr:hover {
+    background-color: #ddd;
+}
+
+table.cpm th {
+    border: 1px solid #ddd;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #3b4e9a;
+    color: white;
+    padding-left: 5px;
+}

@@ -1,0 +1,9 @@
+{
+  "name": "trizelos/cerberus-plugins-manager",
+  "description": "This plugin is for updating the other cerberus plugins via a key.",
+  "autoload": {
+    "psr-4": {
+      "Cerberus\\AdminPluginsManager\\": "admin/src/"
+    }
+  }
+}
