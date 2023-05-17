@@ -76,7 +76,7 @@ class SettingsPage
 				?>
                 <tr>
                     <td><?= $name; ?></td>
-                    <td><?= ( ! empty( $respons ) ? 'connected' : 'disconnected' ); ?></td>
+                    <td><?= ( ! empty( $respons ) && is_array( $respons ) ? 'connected' : ( ! empty( $respons ) ? $respons : 'no release found' ) ); ?></td>
                 </tr>
 			<?php } ?>
             </tbody>
