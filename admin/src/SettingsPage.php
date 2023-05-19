@@ -4,8 +4,11 @@ namespace Cerberus\AdminPluginsManager;
 
 class SettingsPage
 {
-	public function __construct( private readonly string $file_name )
+	private $file_name;
+
+	public function __construct( string $file_name )
 	{
+		$this->file_name = $file_name;
 		add_action( 'admin_menu', [ $this, 'admin_menu' ], 1000 );
 		add_action( 'admin_post_cpm_settings', [ $this, 'admin_post_cpm_settings' ] );
 		add_action( 'admin_post_nopriv_cpm_settings', [ $this, 'admin_post_cpm_settings' ] );
@@ -76,7 +79,7 @@ class SettingsPage
 				?>
                 <tr>
                     <td><?= $name; ?></td>
-                    <td><?= ( ! empty( $respons ) ? 'connected' : 'disconnected' ); ?></td>
+                    <td><?= ( ! empty( $respons ) && is_array( $respons ) ? 'connected' : ( ! empty( $respons ) ? $respons : 'no release found' ) ); ?></td>
                 </tr>
 			<?php } ?>
             </tbody>
