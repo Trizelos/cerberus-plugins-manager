@@ -71,15 +71,30 @@ class SettingsPage
             <tr>
                 <th>Plugin</th>
                 <th>Connection Status to Repo</th>
+                <th>Newest Version</th>
+                <th>Current Version</th>
             </tr>
             </thead>
             <tbody>
 			<?php
-			foreach ( $responses as $name => $respons ) {
+			foreach ( $responses as $name => $data ) {
+				$response    = $data['response'];
+				$plugin_data = $data['plugin_data'];
+
+				$out_of_date = false;
+				if ( ! empty( $response['tag_name'] ) ) {
+					$out_of_date = version_compare( $response['tag_name'], $plugin_data['Version'], 'gt' );
+				}
 				?>
-                <tr>
+                <tr class="<?= $out_of_date ? 'out-of-date' : ''; ?>">
                     <td><?= $name; ?></td>
-                    <td><?= ( ! empty( $respons ) && is_array( $respons ) ? 'connected' : ( ! empty( $respons ) ? $respons : 'no release found' ) ); ?></td>
+                    <td><?= ( ! empty( $response ) && is_array( $response ) ? 'connected' : ( ! empty( $response ) ? $response : 'no release found' ) ); ?></td>
+                    <td>
+						<?= ! empty( $response['tag_name'] ) ? $response['tag_name'] : 'Not version Found'; ?>
+                    </td>
+                    <td>
+						<?= $plugin_data['Version']; ?>
+                    </td>
                 </tr>
 			<?php } ?>
             </tbody>
