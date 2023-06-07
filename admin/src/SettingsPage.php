@@ -24,14 +24,10 @@ class SettingsPage
 	public final function admin_menu(): void
 	{
 		$title = __( 'Cerberus Plugins Manager Settings', 'cerberus-plugins-manager' );
-		add_submenu_page(
-			'woocommerce',
-			$title,
-			$title,
-			'administrator',
-			'cerberus_plugins_manager',
-			array( $this, 'settingsPage' )
-		);
+		add_submenu_page( 'woocommerce', $title, $title, 'administrator', 'cerberus_plugins_manager', array(
+				$this,
+				'settingsPage'
+			) );
 	}
 
 	public final function settingsPage(): void
@@ -78,7 +74,7 @@ class SettingsPage
             <tbody>
 			<?php
 			foreach ( $responses as $name => $data ) {
-				$response    = $data['response'];
+				$response = $data['response'];
 				$plugin_data = $data['plugin_data'];
 
 				$out_of_date = false;
@@ -90,7 +86,7 @@ class SettingsPage
                     <td><?= $name; ?></td>
                     <td><?= ( ! empty( $response ) && is_array( $response ) ? 'connected' : ( ! empty( $response ) ? $response : 'no release found' ) ); ?></td>
                     <td>
-						<?= ! empty( $response['tag_name'] ) ? $response['tag_name'] : 'Not version Found'; ?>
+						<?= ! empty( $response['tag_name'] ) ? $response['tag_name'] : 'No version Found'; ?>
                     </td>
                     <td>
 						<?= $plugin_data['Version']; ?>
