@@ -68,12 +68,6 @@ class SettingsPage
 
         $responses = apply_filters('cerberus-core-repos-settings', $repos);
 
-//        $test = "";
-//        $test2 = "";
-//        $t = exec("cd /var/www/vhosts/cl.ge-sporttrade.de/httpdocs/wp-content/plugins/cerberus-cart && composer dump-autoload -o", $test, $test2);
-//        pre($t);
-//        pre($test);
-//        pre($test2);
         ?>
         <br>
         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" ,
@@ -177,8 +171,6 @@ class SettingsPage
             return;
         }
 
-//        pre($zip_url);
-//        wp_die();
 
         $zip = new ZipArchive();
         if ($zip->open($destination_path) === true) {
