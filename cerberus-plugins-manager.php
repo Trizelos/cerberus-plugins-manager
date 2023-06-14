@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Cerberus Plugins Manager
  * Description:       Manages the cerberus plugins
- * Version:           1.0.2
+ * Version:           1.0.3
  * Requires at least: 5.7
  * Author:            Casey
  */
