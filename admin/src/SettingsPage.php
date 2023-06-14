@@ -109,10 +109,10 @@ class SettingsPage
                             <?= !empty($plugin_data['Version']) ? $plugin_data['Version'] : 'Base'; ?>
                         </td>
                         <td>
-                            <button class="install-button primary button" <?= $installed ? 'disabled' : '' ?>
+                            <button class="install-button primary button"
                                     data-repo="<?= empty($data['name']) ? '' : $data['name']; ?>"
                                     onclick="document.querySelector('#repo-to-install').value =this.dataset.repo;">
-                                Install
+                                <?= $installed ? "Update" : "Install" ?>
                             </button>
                         </td>
                     </tr>
