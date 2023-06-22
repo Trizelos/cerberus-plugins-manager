@@ -63,10 +63,8 @@ class SettingsPage
         </div>
 		<?php
 
-		$repoKey = get_option( 'repo-key' );
-		$repos   = $this->getRepos( 'Trizelos', $repoKey );
-
-		$responses = apply_filters( 'cerberus-core-repos-settings', $repos );
+		$repoManager = new RepoManager();
+		$repoList    = $repoManager->getRepoList();
 
 		?>
         <br>
@@ -86,16 +84,19 @@ class SettingsPage
                 </thead>
                 <tbody>
 				<?php
-				foreach ( $responses as $name => $data ) {
-					if ( $name == 'cerberus-plugins-manager/cerberus-plugins-manager.php' ) {
+				foreach ( $repoList as $name => $data ) {
+					if ( empty( $data ) || $name == 'cerberus-plugins-manager/cerberus-plugins-manager.php' ) {
 						continue;
 					}
-					$response    = $data['response'];
-					$plugin_data = $data['plugin_data'];
+					$response    = $data['repoInfos'];
+					$plugin_data = $data['pluginData'];
 					$state       = empty( $response ) ? 'install' : 'update';
 
 					if ( ! empty( $response['tag_name'] ) ) {
 						$state = version_compare( $response['tag_name'], $plugin_data['Version'], 'gt' ) ? 'out-of-date' : $state;
+					}
+					if ( empty( $plugin_data['Version'] ) ) {
+						$state = 'install';
 					}
 					?>
                     <tr class="<?= $state ?>">
@@ -139,6 +140,7 @@ class SettingsPage
 			if ( ! str_contains( $response['name'], 'cerberus' ) ) {
 				continue;
 			}
+
 			$repos[ $response['name'] . '/' . $response['name'] . '.php' ]['name']        = $response['name'];
 			$repos[ $response['name'] . '/' . $response['name'] . '.php' ]['response']    = "";
 			$repos[ $response['name'] . '/' . $response['name'] . '.php' ]['plugin_data'] = "";
@@ -146,6 +148,7 @@ class SettingsPage
 
 		return $repos;
 	}
+
 
 	public final function download_and_extract_repo(): void
 	{
@@ -269,8 +272,6 @@ class SettingsPage
 	private function composer_dump_autoload( string $filePath ): void
 	{
 		exec( "cd $filePath && composer dump-autoload -o" );
-
-		prew( 'updated plugin: ' . $filePath );
 	}
 
 	public final function admin_post_cpm_settings(): void
