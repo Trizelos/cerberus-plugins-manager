@@ -5,5 +5,9 @@
     "psr-4": {
       "Cerberus\\AdminPluginsManager\\": "admin/src/"
     }
+  },
+  "require": {
+    "ext-zip": "*",
+    "ext-curl": "*"
   }
 }

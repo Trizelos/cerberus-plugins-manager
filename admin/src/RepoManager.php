@@ -69,7 +69,7 @@ class RepoManager
 		return $response;
 	}
 
-	private function getRepoInfoByRepoName( string $repoName ): array|bool
+	public function getRepoInfoByRepoName( string $repoName ): array|bool
 	{
 		$request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases', $this->username, $repoName ); // Build URI
 		$response    = $this->getResponse( $request_uri );
