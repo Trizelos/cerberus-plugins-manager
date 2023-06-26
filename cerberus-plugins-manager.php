@@ -8,8 +8,10 @@
  * Author:            Casey
  */
 
+use Cerberus\AdminPluginsManager\PluginUpdater;
 use Cerberus\AdminPluginsManager\SettingsPage;
 
 require_once "vendor/autoload.php";
 
 $settingsPage = new SettingsPage(__FILE__);
+$pluginUpdater = new PluginUpdater(__FILE__, 'cerberus-plugins-manager');
