@@ -13,5 +13,7 @@ use Cerberus\AdminPluginsManager\SettingsPage;
 
 require_once "vendor/autoload.php";
 
-$settingsPage = new SettingsPage(__FILE__);
-$pluginUpdater = new PluginUpdater(__FILE__, 'cerberus-plugins-manager');
+if (is_admin()) {
+    $settingsPage = new SettingsPage(__FILE__);
+    $pluginUpdater = new PluginUpdater(__FILE__, 'cerberus-plugins-manager');
+}
