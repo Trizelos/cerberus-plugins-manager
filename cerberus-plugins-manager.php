@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Cerberus Plugins Manager
  * Description:       Manages the cerberus plugins
- * Version:           1.0.7
+ * Version:           1.0.8
  * Requires at least: 5.7
  * Author:            Casey
  */
@@ -13,7 +13,7 @@ use Cerberus\AdminPluginsManager\SettingsPage;
 
 require_once "vendor/autoload.php";
 
-if (is_admin()) {
-    $settingsPage = new SettingsPage(__FILE__);
-    $pluginUpdater = new PluginUpdater(__FILE__, 'cerberus-plugins-manager');
+if ( is_admin() ) {
+	$settingsPage  = new SettingsPage( __FILE__ );
+	$pluginUpdater = new PluginUpdater( __FILE__, 'cerberus-plugins-manager' );
 }
