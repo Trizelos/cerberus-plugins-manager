@@ -44,7 +44,7 @@ class PluginUpdater
 
 	private function initialize(): void
 	{
-		add_filter( 'site_transient_update_plugins', array( $this, 'modify_transient' ), 10, 1 );
+		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'modify_transient' ), 10, 1 );
 		add_filter( 'plugins_api', array( $this, 'plugin_popup' ), 10, 3 );
 		add_filter( 'upgrader_post_install', array( &$this, 'after_install' ), 10, 3 );
 
@@ -59,10 +59,6 @@ class PluginUpdater
 
 	public function modify_transient( $transient ): mixed
 	{
-		if ( ! str_contains( parse_url( $_SERVER["REQUEST_URI"], PHP_URL_PATH ), '/wp-admin/plugins.php' ) ) {
-			return $transient;
-		}
-
 		if ( empty( $checked = $transient->checked ) ) {
 			return $transient;
 		}
@@ -71,17 +67,26 @@ class PluginUpdater
 			return $transient;
 		}
 
+		$cb_repo_update_check = get_option( 'cb_repo_update_check', [] );
+		if ( isset( $cb_repo_update_check[ $this->basename ] ) && $cb_repo_update_check[ $this->basename ]['time'] > time() ) {
+			if ( isset( $cb_repo_update_check[ $this->basename ]['response'] ) ) {
+				$transient->response[ $this->basename ] = $cb_repo_update_check[ $this->basename ]['response'];
+			}
+
+			return $transient;
+		}
+
 		$this->get_repository_info(); // Get the repo info
 		if ( ! isset( $this->github_response['tag_name'] ) ) {
 			return $transient;
 		}
 
-		prew( $transient );
-
+		if ( isset( $cb_repo_update_check[ $this->basename ]['response'] ) ) {
+			unset( $cb_repo_update_check[ $this->basename ]['response'] );
+		}
 		$out_of_date = version_compare( $this->github_response['tag_name'], $checked[ $this->basename ], 'gt' ); // Check if we're out of date
 
 		if ( $out_of_date ) {
-
 			$new_files = $this->github_response['zipball_url']; // Get the ZIP
 
 			$slug = current( explode( '/', $this->basename ) ); // Create valid slug
@@ -93,8 +98,12 @@ class PluginUpdater
 				'new_version' => $this->github_response['tag_name']
 			);
 
-			$transient->response[ $this->basename ] = (object) $plugin; // Return it in response
+			$transient->response[ $this->basename ]              = (object) $plugin; // Return it in response
+			$cb_repo_update_check[ $this->basename ]['response'] = (object) $plugin;
 		}
+
+		$cb_repo_update_check[ $this->basename ]['time'] = time() + 5 * 60; // minutes * seconds
+		update_option( 'cb_repo_update_check', $cb_repo_update_check );
 
 		return $transient; // Return filtered transient
 	}
@@ -186,6 +195,12 @@ class PluginUpdater
 		}
 
 		$this->composer_dump_autoload();
+
+		$cb_repo_update_check = get_option( 'cb_repo_update_check', [] );
+		if ( isset( $cb_repo_update_check[ $this->basename ]['response'] ) ) {
+			unset( $cb_repo_update_check[ $this->basename ]['response'] );
+		}
+		update_option( 'cb_repo_update_check', $cb_repo_update_check );
 
 		return $result;
 	}
