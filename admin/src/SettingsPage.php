@@ -111,7 +111,7 @@ class SettingsPage
                                     data-repo="<?= empty( $data['name'] ) ? '' : $data['name']; ?>"
 								<?= $state == 'update' ? 'disabled' : ''; ?>
                                     onclick="document.querySelector('#repo-to-install').value =this.dataset.repo;">
-								<?= $state == 'install' ? "Install" : "Update" ?>
+								<?= $state == 'install' ? 'Install' : 'Update' ?>
                             </button>
                         </td>
                     </tr>

@@ -11,7 +11,7 @@
 use Cerberus\AdminPluginsManager\PluginUpdater;
 use Cerberus\AdminPluginsManager\SettingsPage;
 
-require_once "vendor/autoload.php";
+require_once 'vendor/autoload.php';
 
 if (is_admin()) {
     $settingsPage = new SettingsPage(__FILE__);
