@@ -20,7 +20,7 @@ class PluginUpdater
 
     private $github_response;
 
-    public function __construct($file, $repository, $token = "")
+    public function __construct($file, $repository, $token = '')
     {
         $this->file = $file;
         $this->username = 'Trizelos';
@@ -91,7 +91,7 @@ class PluginUpdater
             $slug = current(explode('/', $this->basename)); // Create valid slug
 
             $plugin = [ // setup our plugin info
-                'url'         => $this->plugin["PluginURI"],
+                'url'         => $this->plugin['PluginURI'],
                 'slug'        => $slug,
                 'package'     => $new_files,
                 'new_version' => $this->github_response['tag_name']
@@ -143,7 +143,7 @@ class PluginUpdater
 
         // Set it to an array
         $plugin = [
-            'name'              => $this->plugin["Name"],
+            'name'              => $this->plugin['Name'],
             'slug'              => $this->basename,
             'requires'          => '5.3',
 //						'tested'            => '5.*',
@@ -152,14 +152,14 @@ class PluginUpdater
 //						'downloaded'        => '1',
 //						'added'             => '2016-01-05',
             'version'           => $this->github_response['tag_name'],
-            'author'            => $this->plugin["AuthorName"],
-            'author_profile'    => $this->plugin["AuthorURI"],
+            'author'            => $this->plugin['AuthorName'],
+            'author_profile'    => $this->plugin['AuthorURI'],
             'last_updated'      => $this->github_response['published_at'],
-            'homepage'          => $this->plugin["PluginURI"],
-            'short_description' => $this->plugin["Description"],
+            'homepage'          => $this->plugin['PluginURI'],
+            'short_description' => $this->plugin['Description'],
             'sections'          => [
                 'Updates'     => $this->github_response['body'],
-                'Description' => $this->plugin["Description"],
+                'Description' => $this->plugin['Description'],
             ],
             'download_link'     => $this->github_response['zipball_url']
         ];
@@ -172,7 +172,7 @@ class PluginUpdater
 
         if (null !== $args['filename']) {
             if ($this->authorize_token) {
-                $args = array_merge($args, ["headers" => ["Authorization" => "token {$this->authorize_token}"]]);
+                $args = array_merge($args, ['headers' => ['Authorization' => "token {$this->authorize_token}"]]);
             }
         }
 

@@ -21,7 +21,7 @@ class RepoManager
             $repoInfos = $this->getRepoInfoByRepoName($name);
 
             if (empty($repoInfos)) {
-                $repoInfos = "";
+                $repoInfos = '';
             }
 
             $pluginFile = WP_PLUGIN_DIR . '/' . $name . '/' . $name . '.php';

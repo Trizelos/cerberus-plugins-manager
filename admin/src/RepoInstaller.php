@@ -17,14 +17,14 @@ class RepoInstaller
 	{
 		$response = $this->repoManager->getRepoInfoByRepoName( $repository );
 
-		if ( ! isset( $response["zipball_url"] ) ) {
+		if ( ! isset( $response['zipball_url'] ) ) {
 			wp_redirect( wp_get_referer() );
 
 			return;
 		}
 
-		$zip_url          = $response["zipball_url"];
-		$destination_path = WP_PLUGIN_DIR . '/' . $repository . ".zip";
+		$zip_url          = $response['zipball_url'];
+		$destination_path = WP_PLUGIN_DIR . '/' . $repository . '.zip';
 
 		if ( ! $this->downloadZipFile( $zip_url, $destination_path ) ) {
 			wp_redirect( wp_get_referer() );
