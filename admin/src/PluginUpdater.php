@@ -58,7 +58,7 @@ class PluginUpdater
 
     public function modify_transient($transient): mixed
     {
-        if (empty($checked = $transient->checked)) {
+        if (!property_exists($transient, 'checked') || empty($checked = $transient->checked)) {
             return $transient;
         }
 
