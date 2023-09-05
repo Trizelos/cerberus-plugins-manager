@@ -57,15 +57,14 @@ class RepoManager
 
     private function getResponse(string $request_uri): mixed
     {
-        $args = array();
+        $args = [];
 
         if ($this->authorizeToken) { // Is there an access token?
             $args['headers']['Authorization'] = "bearer {$this->authorizeToken}"; // Set the headers
         }
 
-        $response = json_decode(wp_remote_retrieve_body(wp_remote_get($request_uri, $args)), true); // Get JSON and parse it
-
-        return $response;
+        // Get JSON and parse it
+        return json_decode(wp_remote_retrieve_body(wp_remote_get($request_uri, $args)), true);
     }
 
     public function getRepoInfoByRepoName(string $repoName): array|bool
